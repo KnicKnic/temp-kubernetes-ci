@@ -1,0 +1,8 @@
+name: 'Temp Kubernetes CI'
+description: 'Run a Kubernetes cluster in your CI VM'
+branding:
+  icon: list
+  color: purple
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
