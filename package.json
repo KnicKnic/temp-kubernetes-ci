@@ -1,0 +1,24 @@
+{
+  "name": "temp-kubernetes-ci",
+  "version": "1.0.0",
+  "description": "Create a github action to allow a user to create a kubernetes cluster in their github actions and include it in the actions market place for both linux & windows.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KnicKnic/temp-kubernetes-ci.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/KnicKnic/temp-kubernetes-ci/issues"
+  },
+  "homepage": "https://github.com/KnicKnic/temp-kubernetes-ci#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "@actions/exec": "^1.0.4"
+  }
+}

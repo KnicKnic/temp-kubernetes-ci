@@ -32,3 +32,19 @@ When dealing with kubernetes you end up wanting to test against an actual kubern
 * Thursday, July 30, 11:59 pm local time: Video upload deadline
     * The main deliverable for project teams is a 1-3 minute video describing your idea and project outcomes.
 
+
+
+## Developer instructions
+
+### Setup Environment
+
+```pwsh
+npm i -g @zeit/ncc
+npm install
+```
+
+### Update project
+
+```pwsh
+ncc build index.js
+```
