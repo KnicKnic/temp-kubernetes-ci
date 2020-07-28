@@ -1638,7 +1638,7 @@ kubectl get node`
 
 let linuxShell = 'bash'
 
-let windowsCommand = `$url_file = "https://github.com/KnicKnic/k3s/releases/download/files1/files.zip"
+let windowsCommand = `$url_file = "https://github.com/KnicKnic/k3s/releases/download/files2/files.zip"
 
 $work_dir = $env:GITHUB_WORKSPACE
 $k3s_path = join-path $work_dir "k3s.exe"
