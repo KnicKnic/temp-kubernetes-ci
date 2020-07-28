@@ -9,7 +9,7 @@ sudo chmod 777 ~/.kube/config
 cat ~/.kube/config
 
 # ensure that node is created
-sleep 2
+timeout 2m bash -c 'until kubectl get node $HOSTNAME; do sleep 1; done'
 
 # test for 120 to see if node will go ready
 kubectl wait --timeout=120s --for=condition=Ready node/$HOSTNAME
