@@ -80,14 +80,7 @@ logMessage "node exists"
 
 
 # test for 120 to see if node will go ready
-foreach($second in 1..120){
-    $n = kubectl get node $([Environment]::MachineName) -o json | ConvertFrom-Json
-    # not sure if there is a better way for testing that it went ready.. but this seems to work
-    if(($n.status.conditions |?{$_.reason -eq "KubeletReady"} |%{$_.status} )-contains "True"){
-        break
-    }
-    sleep 1;
-}
+kubectl wait --timeout=120s --for=condition=Ready node/$([Environment]::MachineName)
 
 logMessage "node ready"
 
