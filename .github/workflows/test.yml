@@ -17,5 +17,6 @@ jobs:
     - uses: actions/checkout@v2
 
     - uses: ./
-    - run: kubectl get node [Environment]::MachineName
+    - name: Validate node was registered
+      run: kubectl get node [Environment]::MachineName
       shell: pwsh
