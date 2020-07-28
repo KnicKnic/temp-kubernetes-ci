@@ -1646,8 +1646,18 @@ $k3s_path = join-path $work_dir "k3s.exe"
 $k3s_tmp_dir = join-path $work_dir "k3s_tmp"
 $logs_file = join-path $k3s_tmp_dir "logs.txt"
 $zip_file = join-path $work_dir "files.zip"
- 
+
+function logMessage($msg){
+    $str = "{0} logMessage {1}" -f $(get-date), $msg
+    echo $str
+}
+
+
+logMessage "start download"
+
 curl.exe -s -L -o $zip_file $url_file
+
+logMessage "start extract"
 Expand-Archive -Path $zip_file -DestinationPath $work_dir
 
 $env:Path += ";$work_dir"
@@ -1664,6 +1674,8 @@ nameserver 8.8.8.8
 """ > /etc/resolv.conf
 
 
+logMessage "Get Ip info"
+
 ipconfig /all
 
 $hostNetwork = get-NetIPAddress -InterfaceAlias "Ethernet"| ?{$_.AddressFamily -eq "IPv4"}
@@ -1677,22 +1689,38 @@ $env:KUBE_NETWORK="cbr0"
 # $k3s_command = [scriptblock]::Create("$k3s_path server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server 2>&1 > $logs_file")
 echo "$k3s_path server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server 2>&1 > $logs_file" > $k3s_launch_script
 
-write-host "here is the k3s command"
+
+logMessage "here is the k3s command"
 type $k3s_launch_script
 
 Start-Process "pwsh.exe" -ArgumentList @($k3s_launch_script)
 
-sleep 20
+while(-not $(test-path "~/.kube/k3s.yaml")){
+    sleep 1;
+    logMessage "waiting for ~/.kube/k3s.yaml"
+}
+sleep 1;
+
+logMessage "copying kubeconfig"
 
 copy "~/.kube/k3s.yaml" "~/.kube/config"
 
-type $logs_file
+foreach ($seconds in 1..120) {
+    $empty = kubectl get node $env:COMPUTERNAME
+    if($LASTEXITCODE -eq 0)
+    {
+        break;
+    }
+    sleep 1;
+}
 
-sleep 40
+logMessage "node exists"
 
 type $logs_file
 
 kubectl get node
+
+logMessage "done"
 `
 
 let windowsShell = 'pwsh'
