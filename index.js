@@ -107,13 +107,19 @@ type $k3s_launch_script
 
 # Start-Process "pwsh.exe" -ArgumentList @($k3s_launch_script)
 
-start-process $k3s_path -ArgumentList $("server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server".Split()) -RedirectStandardError $logs_file
+$arguments = "server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server".Split()
+start-process $k3s_path -ArgumentList $arguments -RedirectStandardError $logs_file
 
-while(-not $(test-path "~/.kube/k3s.yaml")){
-    sleep 1;
+
+foreach ($seconds in 1..120) {
     logMessage "waiting for ~/.kube/k3s.yaml"
+    $found = test-path "~/.kube/k3s.yaml"
+    sleep 1; # always sleep (?give time for file to flush?)
+    if($found)
+    {
+        break;
+    }
 }
-sleep 1;
 
 logMessage "copying kubeconfig"
 
@@ -137,7 +143,7 @@ kubectl get node
 logMessage "done"
 `
 
-let windowsShell = 'powershell'
+let windowsShell = 'pwsh'
 
 async function body() {
     try{
