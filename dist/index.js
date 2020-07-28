@@ -1753,8 +1753,7 @@ async function body() {
 
         let fileExtension = fileExtensions[unformattedShell] || ''
         file = file+fileExtension
-
-            
+         
         let shell = builtInShells[unformattedShell] || unformattedShell
         let formattedShell = shell.format(file)
 
