@@ -89,6 +89,3 @@ type $logs_file
 kubectl get node
 
 logMessage "done"
-
-# this is to ensure that everything settled (there are cases where default service accounts were not yet created)
-sleep 2

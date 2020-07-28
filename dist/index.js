@@ -1639,10 +1639,6 @@ sleep 2
 
 # test for 120 to see if node will go ready
 kubectl wait --timeout=120s --for=condition=Ready node/$HOSTNAME
-
-# because this gives me warm fuzzies
-sleep 2
-
 `
 
 let linuxShell = 'bash'
@@ -1739,9 +1735,6 @@ type $logs_file
 kubectl get node
 
 logMessage "done"
-
-# this is to ensure that everything settled (there are cases where default service accounts were not yet created)
-sleep 2
 `
 
 let windowsShell = 'pwsh'

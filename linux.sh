@@ -13,6 +13,3 @@ sleep 2
 
 # test for 120 to see if node will go ready
 kubectl wait --timeout=120s --for=condition=Ready node/$HOSTNAME
-
-# because this gives me warm fuzzies
-sleep 2
