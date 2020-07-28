@@ -42,8 +42,8 @@ async function body() {
         
         let platform = os.platform()
         // if(platform == 'darwin'){
-        //     command = core.getInput('macos')
-        //     unformattedShell = core.getInput('macosShell')
+        //     file = macosScriptName
+        //     unformattedShell = macosShell
         // }
         
         if(platform == 'linux'){
