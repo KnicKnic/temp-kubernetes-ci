@@ -13,17 +13,18 @@ When dealing with kubernetes you end up wanting to test against an actual kubern
 
 ## Tasks
 
-1. Figure out how to install k3s on linux and write a script to do so
-1. Figure out how to install k3s on windows and write a script to do so
-    1. See https://github.com/rancher/k3s/issues/1618 for some info & a branch to start from
-1. Convert script to Github Action
-    1. https://docs.github.com/en/actions/creating-actions/publishing-actions-in-github-marketplace
+1. ~~Figure out how to install k3s on linux and write a script to do so~~
+1. ~~Figure out how to install k3s on windows and write a script to do so~~
+    1. ~~See https://github.com/rancher/k3s/issues/1618 for some info & a branch to start from~~
+1. ~~Convert script to Github Action~~
+    1. ~~https://docs.github.com/en/actions/creating-actions/publishing-actions-in-github-marketplace~~
 1. Convert script to azure devops custom task - see https://docs.microsoft.com/en-us/azure/devops/extend/develop/integrate-build-task?view=azure-devops
     1. Find out if there is a market place for custom tasks like their is for github actions
 1. Write a dynamic storage provisioner for windows folders (enables windows to fufill PVCs)
     1. take https://github.com/KnicKnic/K8s-Storage-Plugins/tree/new_new and add a flexprovisioner & flexvolume that are just windows folders
     1. take https://github.com/rancher/local-path-provisioner and get that to work with windows
         1. This will also probably require csi proxy, which we could embed into k3s or run standalone
+1. Write a load balancer for windows, equivalent of https://github.com/rancher/klipper-lb
 1. Integrate linux with k3d to allow multiple linux nodes for a more realistic user scenario
 
 ## Hackathon
