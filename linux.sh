@@ -8,3 +8,6 @@ sudo chmod 777 ~/.kube/config
 # sleep 15
 cat ~/.kube/config
 kubectl get node
+
+# this is to ensure that everything settled (there are cases where default service accounts were not yet created)
+sleep 4

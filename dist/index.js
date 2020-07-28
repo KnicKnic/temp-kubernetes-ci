@@ -1634,6 +1634,9 @@ sudo chmod 777 ~/.kube/config
 # sleep 15
 cat ~/.kube/config
 kubectl get node
+
+# this is to ensure that everything settled (there are cases where default service accounts were not yet created)
+sleep 4
 `
 
 let linuxShell = 'bash'
@@ -1709,7 +1712,7 @@ logMessage "copying kubeconfig"
 copy "~/.kube/k3s.yaml" "~/.kube/config"
 
 foreach ($seconds in 1..120) {
-    $empty = kubectl get node $env:COMPUTERNAME
+    $empty = kubectl get node $([Environment]::MachineName)
     if($LASTEXITCODE -eq 0)
     {
         break;
@@ -1719,11 +1722,27 @@ foreach ($seconds in 1..120) {
 
 logMessage "node exists"
 
+
+# test for 120 to see if node will go ready
+foreach($second in 1..120){
+    $n = kubectl get node $([Environment]::MachineName) -o json | ConvertFrom-Json
+    # not sure if there is a better way for testing that it went ready.. but this seems to work
+    if(($n.status.conditions |?{$_.reason -eq "KubeletReady"} |%{$_.status} )-contains "True"){
+        break
+    }
+    sleep 1;
+}
+
+logMessage "node ready"
+
 type $logs_file
 
 kubectl get node
 
 logMessage "done"
+
+# this is to ensure that everything settled (there are cases where default service accounts were not yet created)
+sleep 2
 `
 
 let windowsShell = 'pwsh'
