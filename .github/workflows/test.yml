@@ -20,3 +20,19 @@ jobs:
     - name: Validate node was registered
       run: kubectl get node $([Environment]::MachineName)
       shell: pwsh
+
+    - name: Ensure that nodes will come up
+      run: |
+        # test for 120 to see if node will go ready
+        foreach($second in 1..120){
+          $n = kubectl get node $([Environment]::MachineName) -o json | ConvertFrom-Json
+          kubectl get node
+
+          # not sure if there is a better way for testing that it went ready.. but this seems to work
+          if(($n.status.conditions |?{$_.reason -eq "KubeletReady"} |%{$_.status} )-contains "True"){
+            exit 0
+          }
+          sleep 1;
+        }
+        exit 1
+      shell: pwsh
