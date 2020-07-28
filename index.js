@@ -53,7 +53,6 @@ let linuxShell = 'bash'
 let windowsCommand = `$url_file = "https://github.com/KnicKnic/k3s/releases/download/files2/files.zip"
 
 $work_dir = $env:GITHUB_WORKSPACE
-$k3s_launch_script = join-path $work_dir "launch_k3s.ps1"
 $k3s_path = join-path $work_dir "k3s.exe"
 $k3s_tmp_dir = join-path $work_dir "k3s_tmp"
 $logs_file = join-path $k3s_tmp_dir "logs.txt"
@@ -98,15 +97,8 @@ $env:hostCidr = "{0}/{1}" -f $hostNetwork.IpAddress, $hostNetwork.PrefixLength
 #for host-gw
 #eventually need to get rid of KUBE_NETWORK
 $env:KUBE_NETWORK="cbr0"
-# $k3s_command = [scriptblock]::Create("$k3s_path server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server 2>&1 > $logs_file")
-echo "$k3s_path server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server 2>&1 > $logs_file" > $k3s_launch_script
-
-
-logMessage "here is the k3s command"
-type $k3s_launch_script
 
 # Ideally I would directly launch k3s like 2 lines below, however when I do, pwsh gets wedged
-# Start-Process "pwsh.exe" -ArgumentList @($k3s_launch_script)
 start-process "pwsh.exe" -ArgumentList @("-command", "$k3s_path server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server 2>&1 > $logs_file")
 
 # $arguments = "server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server".Split()
