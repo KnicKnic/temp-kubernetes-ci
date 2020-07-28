@@ -11,6 +11,14 @@ When dealing with kubernetes you end up wanting to test against an actual kubern
 1. Test your deployment files / helm charts actually deploy your app correctly
 1. Test the controller you wrote against an actual kubernetes api server
 
+## Source
+
+| file        | description                                                                   |
+|-------------|-------------------------------------------------------------------------------|
+| index.js    | determines what os and launches either linux.sh or windows.ps1 to install k3s |
+| linux.sh    | script to install k3s on linux                                                |
+| windows.ps1 | script to install k3s on windows                                              |
+
 ## Tasks
 
 1. ~~Figure out how to install k3s on linux and write a script to do so~~
