@@ -1693,7 +1693,9 @@ echo "$k3s_path server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --dis
 logMessage "here is the k3s command"
 type $k3s_launch_script
 
-Start-Process "pwsh.exe" -ArgumentList @($k3s_launch_script)
+# Start-Process "pwsh.exe" -ArgumentList @($k3s_launch_script)
+
+start-process $k3s_path -ArgumentList $("server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server".Split()) -RedirectStandardError $logs_file
 
 while(-not $(test-path "~/.kube/k3s.yaml")){
     sleep 1;
@@ -1723,7 +1725,7 @@ kubectl get node
 logMessage "done"
 `
 
-let windowsShell = 'pwsh'
+let windowsShell = 'powershell'
 
 async function body() {
     try{
