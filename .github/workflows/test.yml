@@ -18,5 +18,5 @@ jobs:
 
     - uses: ./
     - name: Validate node was registered
-      run: kubectl get node [Environment]::MachineName
+      run: kubectl get node $([Environment]::MachineName)
       shell: pwsh
