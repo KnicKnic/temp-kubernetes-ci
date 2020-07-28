@@ -85,7 +85,7 @@ $env:hostCidr = "{0}/{1}" -f $hostNetwork.IpAddress, $hostNetwork.PrefixLength
 #for host-gw
 #eventually need to get rid of KUBE_NETWORK
 $env:KUBE_NETWORK="cbr0"
-$k3s_command = [scriptblock]::Create("$k3s_path server -d $k3s_tmp_path  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server 2>&1 > $logs_file")
+$k3s_command = [scriptblock]::Create("$k3s_path server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server 2>&1 > $logs_file")
 
 write-host "here is the k3s command"
 $k3s_command
