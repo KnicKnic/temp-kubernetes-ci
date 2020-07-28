@@ -105,10 +105,11 @@ echo "$k3s_path server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --dis
 logMessage "here is the k3s command"
 type $k3s_launch_script
 
-# Start-Process "pwsh.exe" -ArgumentList @($k3s_launch_script)
+# Ideally I would directly launch k3s like 2 lines below, however when I do, pwsh gets wedged
+Start-Process "pwsh.exe" -ArgumentList @($k3s_launch_script)
 
-$arguments = "server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server".Split()
-start-process $k3s_path -ArgumentList $arguments -RedirectStandardError $logs_file
+# $arguments = "server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server".Split()
+# start-process $k3s_path -ArgumentList $arguments -RedirectStandardError $logs_file
 
 
 foreach ($seconds in 1..120) {
