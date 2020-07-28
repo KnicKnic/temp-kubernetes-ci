@@ -1,3 +1,5 @@
+[![test](https://github.com/KnicKnic/temp-kubernetes-ci/workflows/test/badge.svg?branch=master&event=push)](https://github.com/KnicKnic/temp-kubernetes-ci/actions?query=workflow%3Atest+branch%3Amaster+event%3Apush)
+
 # Goal
 
 Create a github action to allow a user to create a kubernetes cluster in their github actions and include it in the actions market place for both linux & windows.
