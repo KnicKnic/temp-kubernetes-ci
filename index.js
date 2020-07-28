@@ -51,6 +51,9 @@ sleep 2
 
 # test for 120 to see if node will go ready
 kubectl wait --timeout=120s --for=condition=Ready node/$HOSTNAME
+
+# wait for 2m to see that default service gets created
+timeout 2m bash -c 'until kubectl get serviceaccount default; do sleep 1; done'
 `
 
 let linuxShell = 'bash'
@@ -141,6 +144,16 @@ logMessage "node exists"
 kubectl wait --timeout=120s --for=condition=Ready node/$([Environment]::MachineName)
 
 logMessage "node ready"
+
+# wait till default serviceacount was created
+foreach($retries in 1..120){
+    kubectl get serviceaccount default
+    if($LASTEXITCODE -eq 0){
+        break
+    }
+}
+
+logMessage "default serviceaccount created"
 
 type $logs_file
 
