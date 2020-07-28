@@ -84,6 +84,16 @@ kubectl wait --timeout=120s --for=condition=Ready node/$([Environment]::MachineN
 
 logMessage "node ready"
 
+# wait till default serviceacount was created
+foreach($retries in 1..120){
+    kubectl get serviceaccount default
+    if($LASTEXITCODE -eq 0){
+        break
+    }
+}
+
+logMessage "default serviceaccount created"
+
 type $logs_file
 
 kubectl get node

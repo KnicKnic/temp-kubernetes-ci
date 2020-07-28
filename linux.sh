@@ -13,3 +13,6 @@ sleep 2
 
 # test for 120 to see if node will go ready
 kubectl wait --timeout=120s --for=condition=Ready node/$HOSTNAME
+
+# wait for 2m to see that default service gets created
+timeout 2m bash -c 'until kubectl get serviceaccount default; do sleep 1; done'
