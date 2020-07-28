@@ -13,9 +13,11 @@ When dealing with kubernetes you end up wanting to test against an actual kubern
 
 ## Source
 
-* index.js - determines what os and launches either linux.sh or windows.ps1 to install k3s
-* linux.sh - script to install k3s on linux
-* windows.ps1 - script to install k3s on windows
+| file        | description                                                                   |
+|-------------|-------------------------------------------------------------------------------|
+| index.js    | determines what os and launches either linux.sh or windows.ps1 to install k3s |
+| linux.sh    | script to install k3s on linux                                                |
+| windows.ps1 | script to install k3s on windows                                              |
 
 ## Tasks
 
