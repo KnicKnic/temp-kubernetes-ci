@@ -8,7 +8,8 @@ sudo chmod 777 ~/.kube/config
 # sleep 15
 cat ~/.kube/config
 
-# this is to ensure that everything settled (there are cases where default service accounts were not yet created)
-sleep 4
+# ensure that node is created
+sleep 2
 
-kubectl get node
+# test for 120 to see if node will go ready
+kubectl wait --timeout=120s --for=condition=Ready node/$HOSTNAME
