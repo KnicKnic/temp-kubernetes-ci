@@ -14,14 +14,27 @@ jobs:
         # os: ["ubuntu-latest", "windows-latest", "macos-latest"]
         os: ["ubuntu-latest", "windows-latest"]
     steps:
-    - uses: actions/checkout@v2
 
-    - uses: ./
-    
-    - name: Validate node was registered
-      run: kubectl get node $([Environment]::MachineName)
-      shell: pwsh
+    - name: test run on multiple platforms
+      uses: knicknic/os-specific-run@v1
+      with:
+        macos: echo "Hi from macos"
+        linux: |
+          get_latest_release() {
+            curl --silent "https://api.github.com/repos/$1/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")'
+          }
+          releaseVersion=$(get_latest_release knicknic/temp-kubernetes-ci)
+          sh -c $(curl -sSL "https://github.com/KnicKnic/temp-kubernetes-ci/releases/download/$releaseVersion/linux.sh")
+        windows: |
+          $url = 'https://github.com/KnicKnic/temp-kubernetes-ci/releases/latest'
+          $request = [System.Net.WebRequest]::Create('https://github.com/KnicKnic/temp-kubernetes-ci/releases/latest')
+          $tag = $request.GetResponse().ResponseUri.OriginalString.split('/')[-1]
+          invoke-webrequest  "https://github.com/KnicKnic/temp-kubernetes-ci/releases/download/$tag/windows.ps1"
+          $filePath = join-path $env:temp windows.ps1
+          Invoke-WebRequest -Uri $url -OutFile $filePath
+          . $filePath
 
+        
     - name: Ensure that node came up
       run: kubectl wait --timeout=10s --for=condition=Ready node/$([Environment]::MachineName)
       shell: pwsh
