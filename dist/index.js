@@ -1649,7 +1649,9 @@ let linuxShell = 'bash'
 let windowsScript = `
 $url_file = "https://github.com/KnicKnic/k3s/releases/download/files2/files.zip"
 
-$work_dir = $env:GITHUB_WORKSPACE
+# $work_dir = $env:GITHUB_WORKSPACE
+$drive = Split-Path $pwd -Qualifier
+$work_dir = join-path $drive tmp knicknic temp-kubernetes-ci
 $k3s_path = join-path $work_dir "k3s.exe"
 $k3s_tmp_dir = join-path $work_dir "k3s_tmp"
 $logs_file = join-path $k3s_tmp_dir "logs.txt"
@@ -1756,7 +1758,16 @@ async function body() {
     try{
         let unformattedShell = ''
         let command = ''
-        let file = path.join(process.env.GITHUB_WORKSPACE, uuidv4())
+
+        let tmpPath = path.join(path.sep, 'tmp', 'knicknic', 'temp-kubernetes-ci')
+        
+        core.info(`About to create folder ${tmpPath}`)
+
+        await fs.promises.mkdir(tmpPath, { recursive: true });
+        
+        core.info(`Created folder  ${tmpPath}`)
+
+        let file = path.join(tmpPath, uuidv4())
         
         let platform = os.platform()
         // if(platform == 'darwin'){
