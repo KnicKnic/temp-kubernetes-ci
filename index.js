@@ -178,7 +178,7 @@ async function body() {
         let tmpPath = path.join(path.sep, 'tmp', 'knicknic', 'temp-kubernetes-ci')
         
         core.info(`About to create folder ${tmpPath}`)
-        await fs.mkdir(tmpPath, { recursive: true });
+        await fs.promises.mkdir(tmpPath, { recursive: true });
         
         core.info(`Created folder  ${tmpPath}`)
 
