@@ -8,6 +8,8 @@ $k3s_tmp_dir = join-path $work_dir "k3s_tmp"
 $logs_file = join-path $k3s_tmp_dir "logs.txt"
 $zip_file = join-path $work_dir "files.zip"
 
+mkdir $work_dir -ErrorAction SilentlyContinue
+
 function logMessage($msg){
     $str = "{0} logMessage {1}" -f $(get-date), $msg
     echo $str
