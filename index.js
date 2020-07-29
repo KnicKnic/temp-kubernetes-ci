@@ -168,7 +168,13 @@ async function body() {
     try{
         let unformattedShell = ''
         let command = ''
-        let file = path.join(process.env.GITHUB_WORKSPACE, uuidv4())
+
+        let tmpPath = path.join(path.sep, 'tmp', 'knicknic', 'temp-kubernetes-ci')
+        fs.mkdir(tmpPath, { recursive: true }, (err) => {
+            if (err) throw err;
+        });
+
+        let file = path.join(tmpPath, uuidv4())
         
         let platform = os.platform()
         // if(platform == 'darwin'){

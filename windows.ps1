@@ -1,6 +1,7 @@
 $url_file = "https://github.com/KnicKnic/k3s/releases/download/files2/files.zip"
 
-$work_dir = $env:GITHUB_WORKSPACE
+# $work_dir = $env:GITHUB_WORKSPACE
+$work_dir = join-path / tmp knicknic temp-kubernetes-ci
 $k3s_path = join-path $work_dir "k3s.exe"
 $k3s_tmp_dir = join-path $work_dir "k3s_tmp"
 $logs_file = join-path $k3s_tmp_dir "logs.txt"
