@@ -186,25 +186,29 @@ async function body() {
         //    command = macosScript
         //    unformattedShell = macosShell
         // }
-        
+        file = path.resolve(__dirname , '..')
+        core.info(`folder with modules ${file}`)
+
         if(platform == 'linux'){
             command = linuxScript
+            file = path.join(file, 'linux.sh')
             unformattedShell = linuxShell
         } 
         else if (platform == 'win32'){
             command = windowsScript
+            file = path.join(file, 'windows.ps1')
             unformattedShell = windowsShell
         }    else{
             core.setFailed("Unsupported os " + platform)   
         }     
 
-        let fileExtension = fileExtensions[unformattedShell] || ''
-        file = file+fileExtension
+        // let fileExtension = fileExtensions[unformattedShell] || ''
+        // file = file+fileExtension
          
         let shell = builtInShells[unformattedShell] || unformattedShell
         let formattedShell = shell.format(file)
 
-        fs.writeFileSync(file, command)
+        // fs.writeFileSync(file, command)
         core.info(`About to run command ${command}`)
 
         const error_code = await exec.exec(formattedShell);

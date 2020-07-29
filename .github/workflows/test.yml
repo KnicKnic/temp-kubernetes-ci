@@ -14,9 +14,10 @@ jobs:
         # os: ["ubuntu-latest", "windows-latest", "macos-latest"]
         os: ["ubuntu-latest", "windows-latest"]
     steps:
-    - uses: actions/checkout@v2
+    # - uses: actions/checkout@v2
 
-    - uses: ./
+    - uses: knicknic/temp-kubernetes-ci@del_scripts
+
     - name: Validate node was registered
       run: kubectl get node $([Environment]::MachineName)
       shell: pwsh
