@@ -1757,10 +1757,18 @@ async function body() {
         let unformattedShell = ''
         let command = ''
 
+        // let tmpPath1 = path.join(path.sep, 'tmp')
+        // let tmpPath1 = path.join(path.sep, 'tmp', 'knicknic')
+        // let tmpPath1 = path.join(path.sep, 'tmp', 'knicknic', 'temp-kubernetes-ci')
+        // fs.mkdir(tmpPath1)
+        // fs.mkdir(tmpPath2)
+        // fs.mkdir(tmpPath3)
         let tmpPath = path.join(path.sep, 'tmp', 'knicknic', 'temp-kubernetes-ci')
-        fs.mkdir(tmpPath, { recursive: true }, (err) => {
-            if (err) throw err;
-        });
+        
+        core.info(`About to create folder ${tmpPath}`)
+        await fs.mkdir(tmpPath, { recursive: true });
+        
+        core.info(`Created folder  ${tmpPath}`)
 
         let file = path.join(tmpPath, uuidv4())
         
