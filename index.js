@@ -70,7 +70,6 @@ async function body() {
         let shell = builtInShells[unformattedShell] || unformattedShell
         let formattedShell = shell.format(file)
 
-        // fs.writeFileSync(file, command)
         core.info(`About to run file ${file}`)
 
         const error_code = await exec.exec(formattedShell);
