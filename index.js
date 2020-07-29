@@ -169,10 +169,15 @@ async function body() {
         let unformattedShell = ''
         let command = ''
 
+        
         let tmpPath = path.join(path.sep, 'tmp', 'knicknic', 'temp-kubernetes-ci')
+        
+        core.info(`About to create folder ${tmpPath}`)
         fs.mkdir(tmpPath, { recursive: true }, (err) => {
             if (err) throw err;
         });
+        
+        core.info(`Created folder  ${tmpPath}`)
 
         let file = path.join(tmpPath, uuidv4())
         
