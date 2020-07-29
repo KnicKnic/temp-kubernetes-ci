@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         # os: ["ubuntu-latest", "windows-latest", "macos-latest"]
+        # os: ["ubuntu-latest", "windows-latest"]
         os: ["windows-latest"]
     steps:
 
@@ -30,7 +31,7 @@ jobs:
           invoke-webrequest  "https://github.com/KnicKnic/temp-kubernetes-ci/releases/download/$tag/windows.ps1"
           $filePath = join-path $env:temp windows.ps1
           Invoke-WebRequest -Uri $url -OutFile $filePath
-          . $filePath
+          & $filePath
 
         
     - name: Ensure that node came up
