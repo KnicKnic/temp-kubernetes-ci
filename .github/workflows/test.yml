@@ -20,11 +20,9 @@ jobs:
       with:
         macos: echo "Hi from macos"
         linux: |
-          get_latest_release() {
-            curl --silent "https://api.github.com/repos/$1/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")'
-          }
-          releaseVersion=$(get_latest_release knicknic/temp-kubernetes-ci)
-          sh -c $(curl -sSL "https://github.com/KnicKnic/temp-kubernetes-ci/releases/download/$releaseVersion/linux.sh")
+          releaseVersion=$(curl --silent "https://api.github.com/repos/knicknic/temp-kubernetes-ci/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
+          script=$(curl -sSL "https://github.com/KnicKnic/temp-kubernetes-ci/releases/download/$releaseVersion/linux.sh")
+          sh -c $script
         windows: |
           $url = 'https://github.com/KnicKnic/temp-kubernetes-ci/releases/latest'
           $request = [System.Net.WebRequest]::Create('https://github.com/KnicKnic/temp-kubernetes-ci/releases/latest')
