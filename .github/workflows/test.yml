@@ -25,10 +25,10 @@ jobs:
           script=$(curl -sSL "https://github.com/KnicKnic/temp-kubernetes-ci/releases/download/$releaseVersion/linux.sh")
           sh -c $script
         windows: |
-          $url = 'https://github.com/KnicKnic/temp-kubernetes-ci/releases/latest'
           $request = [System.Net.WebRequest]::Create('https://github.com/KnicKnic/temp-kubernetes-ci/releases/latest')
-          $tag = $request.GetResponse().ResponseUri.OriginalString.split('/')[-1]
-          invoke-webrequest  "https://github.com/KnicKnic/temp-kubernetes-ci/releases/download/$tag/windows.ps1"
+          $response = $request.GetResponse()
+          $tag = $response.ResponseUri.OriginalString.split('/')[-1]
+          $url =  "https://github.com/KnicKnic/temp-kubernetes-ci/releases/download/$tag/windows.ps1"
           $filePath = join-path $env:temp windows.ps1
           Invoke-WebRequest -Uri $url -OutFile $filePath
           & $filePath
