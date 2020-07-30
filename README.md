@@ -4,6 +4,39 @@
 
 Create a github action to allow a user to create a kubernetes cluster in their github actions and include it in the actions market place for both linux & windows.
 
+## Usage
+
+For linux you can reference [k3s environment variables](https://rancher.com/docs/k3s/latest/en/installation/install-options/how-to-flags/) on setting additional parameters
+
+### GitHub Action
+
+```yaml
+    - uses: knicknic/temp-kubernetes-ci@master
+```
+
+### Other CI platform
+
+Simply copy the below code snippet to get the latest version of the code
+
+#### Linux
+
+```bash
+releaseVersion=$(curl --silent "https://api.github.com/repos/knicknic/temp-kubernetes-ci/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")')
+curl -sSL "https://github.com/KnicKnic/temp-kubernetes-ci/releases/download/$releaseVersion/linux.sh" | sh
+```
+
+#### Windows
+
+```powershell
+$request = [System.Net.WebRequest]::Create('https://github.com/KnicKnic/temp-kubernetes-ci/releases/latest')
+$response = $request.GetResponse()
+$tag = $response.ResponseUri.OriginalString.split('/')[-1]
+$url =  "https://github.com/KnicKnic/temp-kubernetes-ci/releases/download/$tag/windows.ps1"
+$filePath = join-path $env:temp windows.ps1
+Invoke-WebRequest -Uri $url -OutFile $filePath
+& $filePath
+```
+
 ## Why
 
 When dealing with kubernetes you end up wanting to test against an actual kubernetes cluster.
