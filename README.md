@@ -11,7 +11,7 @@ For linux you can reference [k3s environment variables](https://rancher.com/docs
 ### GitHub Action
 
 ```yaml
-    - uses: knicknic/temp-kubernetes-ci@master
+    - uses: knicknic/temp-kubernetes-ci@v1
 ```
 
 ### Other CI platform
