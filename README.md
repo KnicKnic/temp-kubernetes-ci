@@ -2,7 +2,7 @@
 
 # Temp Kubernetes CI
 
-A github action to create a kubernetes cluster in your CI VM for both linux & windows. Also has code to copy and paste for other CI platforms.
+A github action to create a kubernetes cluster in your CI VM for both linux & windows. Also has cmdline to copy and paste for other CI platforms.
 
 ## Usage
 
