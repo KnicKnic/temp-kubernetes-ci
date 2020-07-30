@@ -1,9 +1,10 @@
-$url_file = "https://github.com/KnicKnic/k3s/releases/download/files2/files.zip"
+$url_file = "https://github.com/KnicKnic/k3s/releases/download/files3/files.zip"
 
 # $work_dir = $env:GITHUB_WORKSPACE
 $drive = Split-Path $pwd -Qualifier
 $work_dir = join-path $drive tmp knicknic temp-kubernetes-ci
 $k3s_path = join-path $work_dir "k3s.exe"
+$wins_path = Join-Path $work_dir "wins.exe"
 $k3s_tmp_dir = join-path $work_dir "k3s_tmp"
 $logs_file = join-path $k3s_tmp_dir "logs.txt"
 $zip_file = join-path $work_dir "files.zip"
@@ -51,11 +52,13 @@ $env:hostCidr = "{0}/{1}" -f $hostNetwork.IpAddress, $hostNetwork.PrefixLength
 $env:KUBE_NETWORK="cbr0"
 
 # Ideally I would directly launch k3s like 2 lines below, however when I do, pwsh gets wedged
-start-process "pwsh.exe" -ArgumentList @("-command", "$k3s_path server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server 2>&1 > $logs_file")
+start-process "pwsh.exe" -ArgumentList @("-command", "$k3s_path server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable traefik,local-storage,metrics-server 2>&1 > $logs_file")
 
 # $arguments = "server -d $k3s_tmp_dir  --flannel-backend host-gw --docker --disable-network-policy --pause-image mcr.microsoft.com/k8s/core/pause:1.0.0 --disable servicelb,traefik,local-storage,metrics-server".Split()
 # start-process $k3s_path -ArgumentList $arguments -RedirectStandardError $logs_file
 
+# start wins in new windows
+Start-Process "pwsh.exe" -ArgumentList @("-command", "$wins_path srv app run")
 
 foreach ($seconds in 1..120) {
     logMessage "waiting for ~/.kube/k3s.yaml"
