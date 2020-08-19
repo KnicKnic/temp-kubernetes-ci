@@ -66,8 +66,14 @@ When dealing with kubernetes you end up wanting to test against an actual kubern
     1. take https://github.com/rancher/local-path-provisioner and get that to work with windows
         1. This will also probably require csi proxy, which we could embed into k3s or run standalone
 1. ~~Publish docs so generic CI platforms can use~~
-1. Write a load balancer for windows, equivalent of https://github.com/rancher/klipper-lb
+1. ~~Write a load balancer for windows, equivalent of https://github.com/rancher/klipper-lb~~
 1. Integrate linux with k3d to allow multiple linux nodes for a more realistic user scenario
+
+## Links
+
+* K3s fork that this code is based off of - https://github.com/KnicKnic/k3s/tree/k3s_run_windows_node_8
+* Azure Devops extension - https://marketplace.visualstudio.com/items?itemName=k3sCIPublisher.runk3sinci&ssr=false#overview 
+* Cross platform example / demo that uses this extension https://github.com/KnicKnic/powershell-webserver 
 
 ## Developer instructions
 
