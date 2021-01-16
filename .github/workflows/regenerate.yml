@@ -1,0 +1,25 @@
+name: regenerate
+
+on:
+  push:
+
+jobs:
+  regenerate_dist-index_js:
+    runs-on: ubuntu-latest
+    steps:
+    - 
+      uses: actions/checkout@v2
+    - 
+      name: regenerate dist/index.js
+      run: |
+        sudo npm i -g @vercel/ncc@0.26.2
+        npm install
+        ncc build index.js
+    -
+      name: Git Auto Commit
+      uses: stefanzweifel/git-auto-commit-action@75802d269e7721b5146d08f6063ba3097c55ad2b
+      with:
+        file_pattern: dist/index.js
+        commit_message: Regenerate dist/index.js
+        
+        
