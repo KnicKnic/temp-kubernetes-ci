@@ -80,7 +80,7 @@ When dealing with kubernetes you end up wanting to test against an actual kubern
 ### Setup Environment
 
 ```pwsh
-npm i -g @zeit/ncc
+npm i -g @vercel/ncc@0.26.2
 npm install
 ```
 
