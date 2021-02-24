@@ -17,7 +17,7 @@ jobs:
         ncc build index.js
     -
       name: Git Auto Commit
-      uses: stefanzweifel/git-auto-commit-action@75802d269e7721b5146d08f6063ba3097c55ad2b
+      uses: stefanzweifel/git-auto-commit-action@296e083b4c312cf3438feb21957a85fa9677f61d
       with:
         file_pattern: dist/index.js
         commit_message: Regenerate dist/index.js
