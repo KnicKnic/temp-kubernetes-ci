@@ -19,6 +19,6 @@
   "homepage": "https://github.com/KnicKnic/temp-kubernetes-ci#readme",
   "dependencies": {
     "@actions/core": "^1.4.0",
-    "@actions/exec": "^1.0.4"
+    "@actions/exec": "^1.1.0"
   }
 }
